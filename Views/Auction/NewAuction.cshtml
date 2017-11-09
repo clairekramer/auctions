@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "New Auction";
+}
+
+@model auctions.Models.AuctionItem
+<div class="row">
+    <h1 class="eight columns">New Auction</h1>
+    <a href="/Dashboard">Home</a>
+    <a href="/Logout">Logout</a>
+</div>
+
+<div class="five columns">
+    <form asp-action="AddItem" asp-controller="Auction" method="Post">
+        <input type="hidden" asp-for="UserId" value="@ViewBag.UserId">
+        <span asp-validation-for="Name"></span>
+        <label asp-for="Name"></label><input asp-for="Name">
+        <span asp-validation-for="Description"></span>
+        <label asp-for="Description"></label><input asp-for="Description">
+        <span asp-validation-for="StartingBid"></span>
+        <label asp-for="StartingBid"></label><input asp-for="StartingBid">
+        <span asp-validation-for="EndDate"></span>
+        <label asp-for="EndDate"></label><input asp-for="EndDate"><br>
+        <input type="submit" value="Create Auction">
+    </form>
+</div>

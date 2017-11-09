@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model auctions.Models.AuctionItem
+<div class="row">
+    <h1 class="ten columns">Current Auctions</h1>
+    <p>Hi @ViewBag.CurrentUser.FirstName!</p>
+    <a href="/Logout">Logout</a>
+</div>
+
+<div class="nine columns">
+    <table>
+        <thead>
+            <th>Product</th>
+            <th>Seller</th>
+            <th>Top Bid</th>
+            <th>Time Remaining</th>
+        </thead>
+        <tbody>
+            @{
+                foreach(var item in @ViewBag.AllItems) {
+                    int max = item.StartingBid;
+                    <tr>
+                        <td><a href="Auction/@item.ItemId">@item.Name</a></td>
+                        <td>@item.User.FirstName</td>
+                        @foreach(var bid in @item.Bids){
+                                if(bid.Amount > max) {
+                                    max = bid.Amount;
+                                }
+                        }
+                            <td>$@max</td>
+                        <td>@((item.EndDate - @ViewBag.CurrentDate).Days) Days</td>
+                        @if(@ViewBag.UserId == @item.UserId){
+                            <td><a href="Delete/@item.ItemId">Delete</a></td>
+                        } 
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <a href="NewAuction" class="button button-primary u-pull-right">New Auction</a>
+    <p>Your Current Wallet: $@ViewBag.CurrentUser.Wallet</p>
+</div>

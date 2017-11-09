@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Auction";
+}
+
+
+<div class="row">
+    <h1 class="eight columns">@ViewBag.CurrentItem.Name</h1>
+    <a href="/Dashboard">Home</a>
+    <a href="/Logout">Logout</a>
+</div>
+
+<h3>Time Remaining: @((ViewBag.CurrentItem.EndDate - @ViewBag.CurrentDate).Days) Days </h3>
+<p>@ViewBag.CurrentItem.Description</p>
+@{ 
+    if(@ViewBag.HighestBid != null) {
+        <h3>Current Highest Bid: $@ViewBag.HighestBid.Amount</h3>
+        <h3>By: @ViewBag.HighestBid.User.FirstName @ViewBag.HighestBid.User.LastName</h3>
+    } else {
+        <h3>Starting Bid: $@ViewBag.CurrentItem.StartingBid</h3>
+    }
+}
+
+
+<p>@ViewBag.error</p>
+<form action="/AddBid" method="POST">
+    <input type="hidden" name="UserId" value="@ViewBag.UserId">
+    <input type="hidden" name="ItemId" value="@ViewBag.CurrentItem.ItemId">
+    <input type="number" name="Amount" placeholder="Your bid goes here...">
+    <input type="submit" value="Bid!">
+</form>
