@@ -29,7 +29,7 @@ namespace auctions.Controllers {
                                         .OrderBy(i => i.EndDate)
                                         .ToList();
             foreach (var item in AllItems){
-                if(item.EndDate <= DateTime.Now) {
+                if(item.EndDate == DateTime.Now) {
                     foreach(var bid in item.Bids) {
                         Bid HighestBid = _context.Bids
                                 .Include(b => b.User)
